@@ -29,7 +29,7 @@ import LoginImage from "@/assets/LoginImage.png";
 import {
     validateActivationToken,
     activateOperatorAccount,
-} from "@/services/AuthOperatorService";
+} from "@/services/authOperatorService";
 import { ActivateAccountSchema, passwordFieldSchema } from "@/schemas/authSchema";
 import { zodFieldValidator } from "@/lib/validators";
 import { toast } from "sonner";

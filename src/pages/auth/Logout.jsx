@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { OperatorLogout } from "@/services/AuthOperatorService";
+import { OperatorLogout } from "@/services/authOperatorService";
 
 const Logout = () => {
     const navigate = useNavigate();

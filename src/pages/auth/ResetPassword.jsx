@@ -29,7 +29,7 @@ import LoginImage from "@/assets/LoginImage.png";
 import {
     validateResetToken,
     resetOperatorPassword,
-} from "@/services/AuthOperatorService";
+} from "@/services/authOperatorService";
 import {
     ResetPasswordSchema,
     passwordFieldSchema,

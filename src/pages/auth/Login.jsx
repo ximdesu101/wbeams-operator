@@ -31,7 +31,7 @@ import LoginImage from "@/assets/LoginImage.png";
 import { Tiles } from "@/components/styles/background/tiles";
 import { LoginSchema } from "@/schemas/authSchema";
 import { zodFieldValidator } from "@/lib/validators";
-import { OperatorLogin } from "@/services/AuthOperatorService";
+import { OperatorLogin } from "@/services/authOperatorService";
 import ForgotPassword from "./ForgotPassword";
 
 const LoginForm = ({ className, ...props }) => {

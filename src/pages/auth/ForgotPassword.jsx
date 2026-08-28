@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button";
 import { Field, FieldError } from "@/components/ui/field";
 import { Mail, Send, LockKeyhole, CheckCircle2 } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
-import { requestPasswordReset } from "@/services/AuthOperatorService";
+import { requestPasswordReset } from "@/services/authOperatorService";
 import { ForgotPasswordSchema } from "@/schemas/authSchema";
 import { zodFieldValidator } from "@/lib/validators";
 import { toast } from "sonner";
