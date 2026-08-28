@@ -181,22 +181,20 @@ const LoginForm = ({ className, ...props }) => {
                                                         aria-invalid={!field.state.meta.isValid}
                                                         autoComplete="current-password"
                                                     />
-                                                    <InputGroupAddon><Lock /></InputGroupAddon> 
+                                                    <InputGroupAddon><Lock /></InputGroupAddon>
                                                     <InputGroupAddon align="inline-end">
                                                         <Tooltip>
                                                             <TooltipTrigger asChild>
                                                                 <button
                                                                     type="button"
-                                                                    className="text-muted-foreground"
-                                                                    onClick={() =>
-                                                                        setShowPassword((v) => !v)
-                                                                    }
-                                                                    tabIndex={-1}
+                                                                    aria-label="Toggle password visibility"
+                                                                    onClick={() => setShowPassword((prev) => !prev)}
+                                                                    className="absolute inset-y-0 right-2 flex items-center text-gray-500 hover:text-gray-700 cursor-pointer"
                                                                 >
                                                                     {showPassword ? (
-                                                                        <EyeOff className="size-4" />
+                                                                        <EyeOff className="w-5 h-5" />
                                                                     ) : (
-                                                                        <Eye className="size-4" />
+                                                                        <Eye className="w-5 h-5" />
                                                                     )}
                                                                 </button>
                                                             </TooltipTrigger>
