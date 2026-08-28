@@ -1,0 +1,2 @@
+export const input_class ="pl-9 w-full rounded-md border border-border bg-background py-1.5 md:py-2 text-foreground placeholder:text-muted-foreground text-sm focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+export const icon_class ="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-muted-foreground"
