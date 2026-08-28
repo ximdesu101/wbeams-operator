@@ -21,7 +21,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { OperatorLogout } from "@/services/AuthOperatorService";
+import { OperatorLogout } from "@/services/authOperatorService";
 import { cn } from "@/lib/utils";
 
 import ThemeIcon from "@/components/styles/theme/ThemeIcon"

@@ -30,7 +30,7 @@ import {
     useSidebar,
 } from '@/components/ui/sidebar'
 import { Spinner } from "@/components/ui/spinner"
-import { OperatorLogout } from "@/services/AuthOperatorService";
+import { OperatorLogout } from "@/services/authOperatorService";
 
 export function NavUser({ user }) {
     const { isMobile } = useSidebar()
