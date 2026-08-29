@@ -137,12 +137,12 @@ function OperatorActivation({ className, ...props }) {
                                             ? "Validating your invitation link…"
                                             : tokenValid
                                                 ? operator
-                                                    ? `Welcome, ${operator.first_name}! Please set a password to activate your account. Your email is ${operator.email}.`
+                                                ? <>Welcome, {operator.first_name}! Please set a password to activate your account. Your email is <strong>{operator.email}</strong>.</>
                                                     : "Set a password to activate your account."
                                                 : "This invitation link is invalid or has expired."}
                                     </CardDescription>
                                 </CardHeader>
-
+                                <Separator/>
                                 {tokenQuery.isLoading ? (
                                     <div className="flex items-center justify-center py-12">
                                         <Spinner className="size-8" />
