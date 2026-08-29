@@ -35,26 +35,21 @@ const CardMetrics = ({ totalReports = 0, pendingReports = 0 }) => {
                 const Icon = data.icon;
 
                 return (
-                    <Card key={data.id} className="flex-row gap-0">
+                    <Card key={data.id} className="flex-row gap-0 p-2">
+                        <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${data.bgColor}`}>
+                            {Icon && <Icon className={`h-5 w-5 ${data.iconColor}`} />}
+                        </div>
                         <div className="flex-1">
                             <CardHeader className="pb-0">
                                 <CardTitle className="text-sm">
                                     {data.title}
                                 </CardTitle>
                             </CardHeader>
-
                             <CardContent>
-                                <h1 className="text-3xl font-bold tracking-tight">
+                                <h1 className="text-2xl font-bold tracking-tight">
                                     {data.value}
                                 </h1>
                             </CardContent>
-                        </div>
-                        <div className="flex items-center pr-4">
-                            <div
-                                className={`flex h-10 w-10 items-center justify-center rounded-full ${data.bgColor}`}
-                            >
-                                <Icon className={`h-5 w-5 ${data.iconColor}`} />
-                            </div>
                         </div>
                     </Card>
                 );
