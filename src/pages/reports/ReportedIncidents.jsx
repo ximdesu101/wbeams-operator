@@ -50,3 +50,5 @@ const ReportedIncidents = () => {
         </div>
     );
 };
+
+export default ReportedIncidents;
