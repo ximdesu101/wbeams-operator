@@ -4,6 +4,7 @@ import { useForm } from "@tanstack/react-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import {
     Card,
     CardContent,
@@ -23,6 +24,11 @@ import {
     InputGroupAddon,
     InputGroupInput,
 } from "@/components/ui/input-group";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger
+} from "@/components/ui/tooltip";
 import { Spinner } from "@/components/ui/spinner";
 import { Tiles } from "@/components/styles/background/tiles";
 import LoginImage from "@/assets/LoginImage.png";
@@ -30,7 +36,11 @@ import {
     validateActivationToken,
     activateOperatorAccount,
 } from "@/services/authOperatorService";
-import { ActivateAccountSchema, passwordFieldSchema } from "@/schemas/authSchema";
+import {
+    ActivateAccountSchema,
+    passwordFieldSchema,
+    passwordConfirmFieldSchema,
+} from "@/schemas/authSchema";
 import { zodFieldValidator } from "@/lib/validators";
 import { toast } from "sonner";
 import { Eye, EyeOff, LockKeyhole, ShieldCheck } from "lucide-react";
@@ -40,6 +50,7 @@ function OperatorActivation({ className, ...props }) {
     const [searchParams] = useSearchParams();
     const token = searchParams.get("token") || "";
     const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const tokenQuery = useQuery({
         queryKey: ["activation-token", token],
@@ -104,18 +115,15 @@ function OperatorActivation({ className, ...props }) {
     const tokenInvalid = !token || tokenQuery.isError;
 
     return (
-        <div className="relative flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
-            <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-                <Tiles rows={40} cols={20} tileSize="md" />
+        <div
+            className={cn("relative w-screen h-screen overflow-hidden", className)}
+            {...props}
+        >
+            <div className="absolute inset-0 z-0">
+                <Tiles rows={40} cols={20} />
             </div>
-            <div
-                className={cn(
-                    "relative z-10 flex w-full max-w-sm flex-col gap-6 md:max-w-4xl",
-                    className
-                )}
-                {...props}
-            >
-                <div className="flex flex-col gap-6">
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-muted/80 p-6 md:p-10 z-10">
+                <div className="w-full max-w-sm md:max-w-4xl">
                     <Card className="overflow-hidden p-0">
                         <CardContent className="grid p-0 md:grid-cols-2">
                             <div className="p-6 md:p-8">
@@ -128,10 +136,10 @@ function OperatorActivation({ className, ...props }) {
                                         {tokenQuery.isLoading
                                             ? "Validating your invitation link…"
                                             : tokenValid
-                                              ? operator
-                                                  ? `Welcome, ${operator.first_name}. Set a password to activate your account.`
-                                                  : "Set a password to activate your account."
-                                              : "This invitation link is invalid or has expired."}
+                                                ? operator
+                                                    ? `Welcome, ${operator.first_name}! Please set a password to activate your account. Your email is ${operator.email}.`
+                                                    : "Set a password to activate your account."
+                                                : "This invitation link is invalid or has expired."}
                                     </CardDescription>
                                 </CardHeader>
 
@@ -140,10 +148,11 @@ function OperatorActivation({ className, ...props }) {
                                         <Spinner className="size-8" />
                                     </div>
                                 ) : tokenInvalid ? (
-                                    <div className="grid gap-4 py-4">
+                                    <div className="grid gap-4">
                                         <p className="text-sm text-muted-foreground">
                                             Ask your administrator to resend an invitation.
                                         </p>
+                                        <Separator />
                                         <Button
                                             type="button"
                                             onClick={() => navigate("/", { replace: true })}
@@ -161,19 +170,6 @@ function OperatorActivation({ className, ...props }) {
                                         noValidate
                                     >
                                         <FieldGroup>
-                                            {operator?.email ? (
-                                                <Field>
-                                                    <FieldLabel>Email</FieldLabel>
-                                                    <InputGroup>
-                                                        <InputGroupInput
-                                                            value={operator.email}
-                                                            disabled
-                                                            readOnly
-                                                        />
-                                                    </InputGroup>
-                                                </Field>
-                                            ) : null}
-
                                             <form.Field
                                                 name="password"
                                                 validators={{
@@ -206,20 +202,25 @@ function OperatorActivation({ className, ...props }) {
                                                                 autoComplete="new-password"
                                                             />
                                                             <InputGroupAddon align="inline-end">
-                                                                <button
-                                                                    type="button"
-                                                                    className="text-muted-foreground"
-                                                                    onClick={() =>
-                                                                        setShowPassword((v) => !v)
-                                                                    }
-                                                                    tabIndex={-1}
-                                                                >
-                                                                    {showPassword ? (
-                                                                        <EyeOff className="size-4" />
-                                                                    ) : (
-                                                                        <Eye className="size-4" />
-                                                                    )}
-                                                                </button>
+                                                                <Tooltip>
+                                                                    <TooltipTrigger asChild>
+                                                                        <button
+                                                                            type="button"
+                                                                            aria-label="Toggle password visibility"
+                                                                            onClick={() => setShowPassword((prev) => !prev)}
+                                                                            className="absolute inset-y-0 right-2 flex items-center text-gray-500 hover:text-gray-700 cursor-pointer"
+                                                                        >
+                                                                            {showPassword ? (
+                                                                                <EyeOff className="w-5 h-5" />
+                                                                            ) : (
+                                                                                <Eye className="w-5 h-5" />
+                                                                            )}
+                                                                        </button>
+                                                                    </TooltipTrigger>
+                                                                    <TooltipContent>
+                                                                        <p>{showPassword ? 'Hide password' : 'Show password'}</p>
+                                                                    </TooltipContent>
+                                                                </Tooltip>
                                                             </InputGroupAddon>
                                                         </InputGroup>
                                                         <FieldError
@@ -230,8 +231,21 @@ function OperatorActivation({ className, ...props }) {
                                                     </Field>
                                                 )}
                                             </form.Field>
-
-                                            <form.Field name="password_confirmation">
+                                            <form.Field
+                                                name="password_confirmation"
+                                                validators={{
+                                                    onBlur: ({ value, fieldApi }) => {
+                                                        const schemaResult = passwordConfirmFieldSchema.safeParse(value);
+                                                        if (!schemaResult.success) {
+                                                            return schemaResult.error.issues[0].message;
+                                                        }
+                                                        if (value !== fieldApi.form.getFieldValue("password")) {
+                                                            return "Passwords do not match";
+                                                        }
+                                                        return undefined;
+                                                    },
+                                                }}
+                                            >
                                                 {(field) => (
                                                     <Field data-invalid={!field.state.meta.isValid}>
                                                         <FieldLabel htmlFor={field.name}>
@@ -244,7 +258,7 @@ function OperatorActivation({ className, ...props }) {
                                                             <InputGroupInput
                                                                 id={field.name}
                                                                 type={
-                                                                    showPassword ? "text" : "password"
+                                                                    showConfirmPassword ? "text" : "password"
                                                                 }
                                                                 value={field.state.value}
                                                                 onBlur={field.handleBlur}
@@ -255,6 +269,27 @@ function OperatorActivation({ className, ...props }) {
                                                                 aria-invalid={!field.state.meta.isValid}
                                                                 autoComplete="new-password"
                                                             />
+                                                            <InputGroupAddon align="inline-end">
+                                                                <Tooltip>
+                                                                    <TooltipTrigger asChild>
+                                                                        <button
+                                                                            type="button"
+                                                                            aria-label="Toggle password visibility"
+                                                                            onClick={() => setShowConfirmPassword((prev) => !prev)}
+                                                                            className="absolute inset-y-0 right-2 flex items-center text-gray-500 hover:text-gray-700 cursor-pointer"
+                                                                        >
+                                                                            {showConfirmPassword ? (
+                                                                                <EyeOff className="w-5 h-5" />
+                                                                            ) : (
+                                                                                <Eye className="w-5 h-5" />
+                                                                            )}
+                                                                        </button>
+                                                                    </TooltipTrigger>
+                                                                    <TooltipContent>
+                                                                        <p>{showConfirmPassword ? 'Hide password' : 'Show password'}</p>
+                                                                    </TooltipContent>
+                                                                </Tooltip>
+                                                            </InputGroupAddon>
                                                         </InputGroup>
                                                         <FieldError
                                                             errors={field.state.meta.errors.map(
@@ -264,11 +299,6 @@ function OperatorActivation({ className, ...props }) {
                                                     </Field>
                                                 )}
                                             </form.Field>
-
-                                            <FieldDescription>
-                                                Password must be at least 8 characters.
-                                            </FieldDescription>
-
                                             <Field>
                                                 <form.Subscribe
                                                     selector={(state) => [
@@ -286,7 +316,7 @@ function OperatorActivation({ className, ...props }) {
                                                             }
                                                         >
                                                             {isSubmitting ||
-                                                            activateMutation.isPending ? (
+                                                                activateMutation.isPending ? (
                                                                 <>
                                                                     <Spinner />
                                                                     Activating…

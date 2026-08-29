@@ -11,7 +11,7 @@ const Logout = () => {
 
             try {
                 if (token) {
-                    await AdminLogout(token);
+                    await OperatorLogout(token);
                 }
             } catch (error) {
                 console.error(error);
