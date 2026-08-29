@@ -327,7 +327,7 @@ export default function MapViewer() {
             <MapContainer
                 center={initialCenter}
                 zoom={17}
-                style={{ height: "535px", width: "100%" }}
+                style={{ height: "552px", width: "100%" }}
                 scrollWheelZoom={true}
             >
                 <TileLayer

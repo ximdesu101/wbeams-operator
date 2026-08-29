@@ -188,7 +188,7 @@ export default function OperatorLayout() {
                 </div>
             </header>
 
-            <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-4 overflow-y-auto px-4 py-6 sm:px-6 lg:px-8">
+            <main className="mx-auto flex w-full max-w-8xl flex-1 flex-col gap-4 overflow-y-auto px-4 py-4">
                 <Outlet />
             </main>
         </div>
