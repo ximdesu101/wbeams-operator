@@ -64,7 +64,7 @@ const ReceivedReports = ({ filter = "incoming", onMetricsChange }) => {
     }, [allReports, filter]);
 
     return (
-        <ScrollArea className="h-[380px]">
+        <ScrollArea className="h-[420px]">
             <div className="space-y-4 pr-3">
                 {isLoading ? (
                     <ReceivedReportSkeleton />

@@ -22,7 +22,7 @@ const ReceivedReportCard = ({ report, onUpdateStatus, isUpdating = false }) => {
 
     return (
         <div className="rounded-xl border border-border bg-background p-4">
-            <div className="mb-3 flex items-start justify-between gap-3">
+            <div className="mb-1 flex items-start justify-between gap-3">
                 <div>
                     <p className="font-semibold">
                         {report.EmergencyType || report.title || "SOS Report"}

@@ -142,7 +142,7 @@ function OperatorActivation({ className, ...props }) {
                                                 : "This invitation link is invalid or has expired."}
                                     </CardDescription>
                                 </CardHeader>
-                                <Separator/>
+                                <Separator className="my-3"/>
                                 {tokenQuery.isLoading ? (
                                     <div className="flex items-center justify-center py-12">
                                         <Spinner className="size-8" />
