@@ -19,3 +19,8 @@ export const sendAlert = async (payload) => {
     const response = await api.post("/operator/alerts", payload);
     return response.data;
 };
+
+export const resolveAlert = async (id) => {
+    const response = await api.patch(`/operator/alerts/${id}/resolve`);
+    return response.data;
+};
