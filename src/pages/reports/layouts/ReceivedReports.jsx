@@ -43,7 +43,7 @@ const ReceivedReports = ({ filter = "incoming", onMetricsChange }) => {
     useEffect(() => {
         if (typeof onMetricsChange === "function") {
             const pending = allReports.filter(
-                (r) => (r.status ?? "pending") === "pending"
+                (r) => r.status === "pending"
             ).length;
             onMetricsChange({ total: allReports.length, pending });
         }
@@ -51,13 +51,15 @@ const ReceivedReports = ({ filter = "incoming", onMetricsChange }) => {
 
     const reports = useMemo(() => {
         if (filter === "incoming") {
+            // Incoming = reports still being handled (pending OR acknowledged)
             return allReports.filter(
-                (r) => (r.status ?? "pending") === "pending"
+                (r) => r.status === "pending" || r.status === "acknowledged"
             );
         }
         if (filter === "recent") {
+            // Recent = reports that are fully handled (resolved or rejected)
             return allReports.filter(
-                (r) => (r.status ?? "pending") !== "pending"
+                (r) => r.status === "resolved" || r.status === "rejected"
             );
         }
         return allReports;
